@@ -1,1 +1,1 @@
-rootProject.name = "spotride-app"
+rootProject.name = "spotride"

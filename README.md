@@ -1,4 +1,2 @@
-# spotride_app
-
-Project build:
-./gradlew build
+# spotride
+Spotride Mobile Application

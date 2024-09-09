@@ -11,13 +11,14 @@ on:
   push:
     branches:
       - "main"
-      - "*sr*"
-      - "*release*"
+      - "story/sr*"
+      - "bug/sr*"
+      - "release/"
   pull_request:
     branches:
-      - "main"
-      - "*sr*"
-      - "*release*"
+      - "story/sr*"
+      - "bug/sr*"
+      - "release/"
 
 permissions:
   contents: read

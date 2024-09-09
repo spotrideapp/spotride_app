@@ -10,7 +10,7 @@ Spotride Core
 
 ### Build a new image:
 ```
-docker build --tag=healthcar:latest . 
+docker build --tag=spotride:latest . 
 ```
 
 ### Run docker compose:

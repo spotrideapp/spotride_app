@@ -1,2 +1,2 @@
-# spotride_app
+# spotride
 Spotride Mobile Application

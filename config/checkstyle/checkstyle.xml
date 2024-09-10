@@ -242,8 +242,6 @@
         <module name="EmptyCatchBlock">
             <property name="exceptionVariableName" value="expected"/>
         </module>
-        <!-- Ломает работу switch-statement. Checkstyle не умеет в его обработку. -->
-        <!--<module name="MissingSwitchDefault"/>-->
         <module name="FallThrough"/>
         <module name="VariableDeclarationUsageDistance"/>
         <module name="OperatorWrap"/>

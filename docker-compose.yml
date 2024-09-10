@@ -1,6 +1,6 @@
 version: '3'
 services:
-  healthcar-rmi:
+  spotride:
     container_name: spotride-back
     build:
       context: .

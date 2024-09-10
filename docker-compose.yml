@@ -1,0 +1,15 @@
+version: '3'
+services:
+  spotride:
+    container_name: spotride-back
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: spotride
+    ports:
+      - 8080:8080
+    networks:
+      - bridge-network
+networks:
+  bridge-network:
+    driver: bridge

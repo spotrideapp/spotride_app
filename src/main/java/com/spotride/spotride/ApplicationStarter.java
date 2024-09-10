@@ -1,4 +1,4 @@
-package com.spotride.spotride_app;
+package com.spotride.spotride;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

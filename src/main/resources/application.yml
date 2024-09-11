@@ -1,2 +1,24 @@
 server:
   port: 8080
+  shutdown: graceful
+
+spring:
+  lifecycle:
+    timeout-per-shutdown-phase: 30s
+
+management:
+  endpoint:
+    shutdown:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include:
+          - info
+          - health
+          - liquibase
+          - metrics
+          - shutdown
+          - prometheus
+  server:
+    port: 8081

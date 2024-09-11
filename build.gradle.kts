@@ -14,6 +14,7 @@ plugins {
 	java
 	id("org.springframework.boot") version "3.3.3"
 	id("io.spring.dependency-management") version "1.1.6"
+	id ("checkstyle")
 }
 
 configurations {
@@ -32,6 +33,9 @@ dependencies {
 
 	//metrics
 	implementation("io.micrometer:micrometer-registry-prometheus:1.12.0")
+
+	//checkstyle
+	checkstyle("com.puppycrawl.tools:checkstyle:8.42")
 }
 
 tasks.withType<Test> {

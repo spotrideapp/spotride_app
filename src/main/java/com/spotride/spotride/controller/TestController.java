@@ -3,12 +3,15 @@ package com.spotride.spotride.controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * Test Controller.
+ */
 @RestController
-public class TestController {
+public final class TestController {
+    private static final String TEST_RESPONSE = "test controller response";
 
     @GetMapping("/test")
     public String test() {
-        return "test controller response";
+        return TEST_RESPONSE;
     }
-
 }

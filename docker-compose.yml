@@ -11,6 +11,18 @@ services:
       - 8081:8081
     networks:
       - bridge-network
+  postgres:
+    container_name: postgres
+    image: postgres:16.4
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+    volumes:
+      - ./src/main/resources/database/db-scripts/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - bridge-network
 networks:
   bridge-network:
     driver: bridge

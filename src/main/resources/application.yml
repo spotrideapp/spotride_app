@@ -3,6 +3,23 @@ server:
   shutdown: graceful
 
 spring:
+  banner:
+    location: banner.txt
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+  datasource:
+    username: root
+    password: root
+    url: jdbc:postgresql://postgres:5432/spotride
+    driver-class-name: org.postgresql.Driver
+  liquibase:
+    change-log: /database/liquibase/master.xml
+    url: jdbc:postgresql://postgres:5432/spotride
+    user: root
+    password: root
+    driver-class-name: org.postgresql.Driver
   lifecycle:
     timeout-per-shutdown-phase: 30s
 

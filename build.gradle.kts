@@ -44,6 +44,9 @@ dependencies {
 
 	//checkstyle
 	checkstyle("com.puppycrawl.tools:checkstyle:8.42")
+
+	//openapi
+	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0")
 }
 
 tasks.withType<Test> {

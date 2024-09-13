@@ -12,14 +12,14 @@ spring:
   datasource:
     username: root
     password: root
-    url: jdbc:postgresql://localhost:5432/spotridedb?currentSchema=spotride
+    url: jdbc:postgresql://postgres:5432/spotridedb?currentSchema=spotride
     driver-class-name: org.postgresql.Driver
     hikari:
       maximum-pool-size: 5
       minimum-idle: 1
   liquibase:
     change-log: /database/liquibase/master.xml
-    url: jdbc:postgresql://localhost:5432/spotridedb?currentSchema=spotride
+    url: jdbc:postgresql://postgres:5432/spotridedb?currentSchema=spotride
     user: root
     password: root
     driver-class-name: org.postgresql.Driver

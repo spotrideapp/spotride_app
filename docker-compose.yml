@@ -1,6 +1,8 @@
 version: '3'
 services:
   spotride:
+    depends_on:
+      - postgres
     container_name: spotride-back
     build:
       context: .
@@ -9,6 +11,20 @@ services:
     ports:
       - 8080:8080
       - 8081:8081
+    networks:
+      - bridge-network
+  postgres:
+    container_name: postgres
+    image: postgres:16.4
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: spotridedb
+      POSTGRES_SCHEMA: spotride
+    volumes:
+      - ./src/main/resources/database/db-scripts/init.sh:/docker-entrypoint-initdb.d/init.sh
     networks:
       - bridge-network
 networks:

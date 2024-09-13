@@ -29,7 +29,15 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-actuator")
 	compileOnly("org.projectlombok:lombok")
 	annotationProcessor("org.projectlombok:lombok")
+
+	//database
+	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+	implementation("org.liquibase:liquibase-core:4.29.2")
+	implementation("org.postgresql:postgresql")
+
+	//test
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
+	testImplementation("com.h2database:h2:2.3.232")
 
 	//metrics
 	implementation("io.micrometer:micrometer-registry-prometheus:1.12.0")

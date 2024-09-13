@@ -1,6 +1,8 @@
 version: '3'
 services:
   spotride:
+    depends_on:
+      - postgres
     container_name: spotride-back
     build:
       context: .

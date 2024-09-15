@@ -42,3 +42,7 @@ management:
           - prometheus
   server:
     port: 8081
+
+springdoc:
+  api-docs:
+    path: /api-doc

@@ -34,3 +34,9 @@ or
 * Metrics endpoint /actuator/metrics
 * Prometheus metrics endpoint /actuator/prometheus
 ```
+
+## Open-Api info
+```
+* Api doc link /api-doc
+* Swagger link /swagger-ui/index.html
+```

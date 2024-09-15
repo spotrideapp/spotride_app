@@ -5,16 +5,17 @@ repositories {
 	mavenCentral()
 }
 
-java {
-	sourceCompatibility = JavaVersion.VERSION_21
-	targetCompatibility = JavaVersion.VERSION_21
-}
-
 plugins {
 	java
 	id("org.springframework.boot") version "3.3.3"
 	id("io.spring.dependency-management") version "1.1.6"
-	id ("checkstyle")
+	id("com.github.spotbugs") version "6.0.22"
+	id("checkstyle")
+}
+
+java {
+	sourceCompatibility = JavaVersion.VERSION_21
+	targetCompatibility = JavaVersion.VERSION_21
 }
 
 configurations {
@@ -47,8 +48,20 @@ dependencies {
 
 	//openapi
 	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0")
+
+	//spotbugs plugin dependencies
+	spotbugsPlugins("com.h3xstream.findsecbugs:findsecbugs-plugin:1.13.0")
+	spotbugsPlugins("com.mebigfatguy.sb-contrib:sb-contrib:7.6.4")
 }
 
 tasks.withType<Test> {
 	useJUnitPlatform()
+}
+
+tasks.spotbugsMain {
+	reports.create("html") {
+		required.set(true)
+		outputLocation.set(file("${project.projectDir}/build/reports/spotbugs.html"))
+		setStylesheet("fancy-hist.xsl")
+	}
 }

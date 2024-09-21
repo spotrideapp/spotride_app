@@ -51,8 +51,8 @@ public final class UserController {
      * @param user user to create
      */
     @PostMapping
-    public void createUser(@RequestBody User user) {
-        userService.createUser(user);
+    public User createUser(@RequestBody User user) {
+        return userService.createUser(user);
     }
 
     /**
@@ -62,8 +62,8 @@ public final class UserController {
      * @param user user to be updated
      */
     @PutMapping("/{id}")
-    public void updateUser(@PathVariable long id, @RequestBody User user) {
-        userService.updateUser(id, user);
+    public User updateUser(@PathVariable long id, @RequestBody User user) {
+        return userService.updateUser(id, user);
     }
 
     /**

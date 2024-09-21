@@ -1,7 +1,7 @@
 package com.spotride.spotride.user.controller;
 
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-
-@WebMvcTest(UserController.class)
+/**
+ * Tests for {@link UserController}.
+ */
 public class UserControllerTest {
 }

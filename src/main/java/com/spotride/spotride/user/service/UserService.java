@@ -3,7 +3,6 @@ package com.spotride.spotride.user.service;
 import com.spotride.spotride.user.UserMapper;
 import com.spotride.spotride.user.dto.UserRequestDto;
 import com.spotride.spotride.user.dto.UserResponseDto;
-import com.spotride.spotride.user.model.User;
 import com.spotride.spotride.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -194,10 +194,10 @@
             <property name="ignoredAnnotations" value="Override, Test"/>
         </module>
         <module name="FinalClass"/>
-        <module name="FinalParameters">
+<!--        <module name="FinalParameters">-->
             <!-- Added LITERAL_CATCH, FOR_EACH_CLAUSE  -->
-            <property name="tokens" value="METHOD_DEF, CTOR_DEF, LITERAL_CATCH, FOR_EACH_CLAUSE"/>
-        </module>
+<!--            <property name="tokens" value="METHOD_DEF, CTOR_DEF, LITERAL_CATCH, FOR_EACH_CLAUSE"/>-->
+<!--        </module>-->
         <module name="HideUtilityClassConstructor"/>
         <module name="ModifierOrder"/>
         <module name="OverloadMethodsDeclarationOrder"/>

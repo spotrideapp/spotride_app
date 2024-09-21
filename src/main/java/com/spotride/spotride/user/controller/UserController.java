@@ -41,7 +41,7 @@ public final class UserController {
      */
     @GetMapping("/{id}")
     public ResponseEntity<UserResponseDto> getUserById(@PathVariable long id) {
-        UserResponseDto userResponseDto = userService.getUserById(id);
+        var userResponseDto = userService.getUserById(id);
 
         return userResponseDto != null ? ResponseEntity.ok(userResponseDto) : ResponseEntity.notFound().build();
     }
@@ -54,7 +54,7 @@ public final class UserController {
      */
     @PostMapping
     public ResponseEntity<UserResponseDto> createUser(@RequestBody @Valid UserRequestDto userDto) {
-        UserResponseDto createdUser = userService.createUser(userDto);
+        var createdUser = userService.createUser(userDto);
 
         return ResponseEntity.ok(createdUser);
     }
@@ -68,7 +68,7 @@ public final class UserController {
      */
     @PutMapping("/{id}")
     public ResponseEntity<UserResponseDto> updateUser(@PathVariable long id, @RequestBody @Valid UserRequestDto userDto) {
-        UserResponseDto updatedUser = userService.updateUser(id, userDto);
+        var updatedUser = userService.updateUser(id, userDto);
 
         return updatedUser != null ? ResponseEntity.ok(updatedUser) : ResponseEntity.notFound().build();
     }

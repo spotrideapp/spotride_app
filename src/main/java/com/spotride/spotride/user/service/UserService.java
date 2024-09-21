@@ -52,7 +52,7 @@ public final class UserService {
      * @return {@link UserResponseDto} for created user
      */
     public UserResponseDto createUser(UserRequestDto userRequestDto) {
-        User user = userMapper.toEntity(userRequestDto);
+        var user = userMapper.toEntity(userRequestDto);
 
         return userMapper.toDto(userRepository.save(user));
     }

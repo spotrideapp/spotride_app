@@ -1,9 +1,12 @@
 package com.spotride.spotride.user.controller;
 
+import com.spotride.spotride.user.dto.UserRequestDto;
+import com.spotride.spotride.user.dto.UserResponseDto;
 import com.spotride.spotride.user.model.User;
 import com.spotride.spotride.user.service.UserService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,6 +15,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
 import java.util.List;
 
 /**
@@ -19,33 +23,66 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/users")
-@RequiredArgsConstructor(onConstructor_ = @Autowired)
+@RequiredArgsConstructor
 public final class UserController {
 
     private final UserService userService;
 
     @GetMapping
-    public List<User> getAllUsers() {
+    public List<UserResponseDto> getAllUsers() {
         return userService.getAllUsers();
     }
 
+    /**
+     * Returns user by id.
+     *
+     * @param id user id
+     * @return {@link ResponseEntity} for user by id
+     */
     @GetMapping("/{id}")
-    public User getUserById(@PathVariable long id) {
-        return userService.getUserById(id);
+    public ResponseEntity<UserResponseDto> getUserById(@PathVariable long id) {
+        UserResponseDto userResponseDto = userService.getUserById(id);
+
+        return userResponseDto != null ? ResponseEntity.ok(userResponseDto) : ResponseEntity.notFound().build();
     }
 
+    /**
+     * Creates user.
+     *
+     * @param userDto user dto model
+     * @return {@link ResponseEntity} for created user
+     */
     @PostMapping
-    public User createUser(@RequestBody User user) {
-        return userService.createUser(user);
+    public ResponseEntity<UserResponseDto> createUser(@RequestBody @Valid UserRequestDto userDto) {
+        UserResponseDto createdUser = userService.createUser(userDto);
+
+        return ResponseEntity.ok(createdUser);
     }
 
+    /**
+     * Update user by id.
+     *
+     * @param id user id
+     * @param userDto user dto model
+     * @return {@link ResponseEntity} for updated user
+     */
     @PutMapping("/{id}")
-    public User updateUser(@PathVariable long id, @RequestBody User user) {
-        return userService.updateUser(id, user);
+    public ResponseEntity<UserResponseDto> updateUser(@PathVariable long id, @RequestBody @Valid UserRequestDto userDto) {
+        UserResponseDto updatedUser = userService.updateUser(id, userDto);
+
+        return updatedUser != null ? ResponseEntity.ok(updatedUser) : ResponseEntity.notFound().build();
     }
 
+    /**
+     * Delete user by id.
+     *
+     * @param id user id
+     * @return {@link ResponseEntity} for updated user
+     */
     @DeleteMapping("/{id}")
-    public void deleteUser(@PathVariable long id) {
+    public ResponseEntity<Void> deleteUser(@PathVariable long id) {
         userService.deleteUser(id);
+
+        return ResponseEntity.noContent().build();
     }
 }

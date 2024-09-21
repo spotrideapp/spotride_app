@@ -1,10 +1,14 @@
 package com.spotride.spotride.user.service;
 
+import com.spotride.spotride.user.UserMapper;
+import com.spotride.spotride.user.dto.UserRequestDto;
+import com.spotride.spotride.user.dto.UserResponseDto;
 import com.spotride.spotride.user.model.User;
 import com.spotride.spotride.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 
 /**
@@ -14,37 +18,58 @@ import java.util.List;
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 public final class UserService {
 
+    private final UserMapper userMapper = UserMapper.INSTANCE;
+
     private final UserRepository userRepository;
 
-    public List<User> getAllUsers() {
-        return userRepository.findAll();
+    /**
+     * Gets all users.
+     *
+     * @return list of {@link UserResponseDto}
+     */
+    public List<UserResponseDto> getAllUsers() {
+        return userRepository.findAll().stream()
+                .map(userMapper::toDto)
+                .toList();
     }
 
-    public User getUserById(Long id) {
-        return userRepository.findById(id).orElse(null);
+    /**
+     * Returns user by id.
+     *
+     * @param id user id
+     * @return {@link UserResponseDto} by user id
+     */
+    public UserResponseDto getUserById(Long id) {
+        return userRepository.findById(id)
+                .map(userMapper::toDto)
+                .orElse(null);
     }
 
-    public User createUser(User user) {
-        return userRepository.save(user);
+    /**
+     * Created user.
+     *
+     * @param userRequestDto {@link UserRequestDto} for user
+     * @return {@link UserResponseDto} for created user
+     */
+    public UserResponseDto createUser(UserRequestDto userRequestDto) {
+        User user = userMapper.toEntity(userRequestDto);
+
+        return userMapper.toDto(userRepository.save(user));
     }
 
     /**
      * Update user by id.
      *
      * @param id user id
-     * @param updatedUser user to be updated
+     * @param updatedUserDto user to be updated
      */
-    public User updateUser(Long id, User updatedUser) {
+    public UserResponseDto updateUser(Long id, UserRequestDto updatedUserDto) {
         return userRepository.findById(id)
                 .map(user -> {
-                    user.setUsername(updatedUser.getUsername());
-                    user.setPassword(updatedUser.getPassword());
-                    user.setEmail(updatedUser.getEmail());
-                    user.setFirstName(updatedUser.getFirstName());
-                    user.setLastName(updatedUser.getLastName());
-
-                    return userRepository.save(user);
-                }).orElse(null);
+                    userMapper.updateEntityFromDto(updatedUserDto, user);
+                    return userMapper.toDto(userRepository.save(user));
+                })
+                .orElse(null);
     }
 
     public void deleteUser(Long id) {

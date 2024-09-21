@@ -1,6 +1,6 @@
 package com.spotride.spotride.user.service;
 
-import com.spotride.spotride.user.model.UserModel;
+import com.spotride.spotride.user.model.User;
 import com.spotride.spotride.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +21,7 @@ public final class UserService {
      *
      * @return list of users
      */
-    public List<UserModel> getAllUsers() {
+    public List<User> getAllUsers() {
         return userRepository.findAll();
     }
 
@@ -31,7 +31,7 @@ public final class UserService {
      * @param id user id
      * @return user by id
      */
-    public UserModel getUserById(Long id) {
+    public User getUserById(Long id) {
         return userRepository.findById(id).orElse(null);
     }
 
@@ -40,7 +40,7 @@ public final class UserService {
      *
      * @param user user to create
      */
-    public UserModel createUser(UserModel user) {
+    public User createUser(User user) {
         return userRepository.save(user);
     }
 
@@ -50,7 +50,7 @@ public final class UserService {
      * @param id user id
      * @param updatedUser user to be updated
      */
-    public UserModel updateUser(Long id, UserModel updatedUser) {
+    public User updateUser(Long id, User updatedUser) {
         return userRepository.findById(id)
                 .map(user -> {
                     user.setUsername(updatedUser.getUsername());

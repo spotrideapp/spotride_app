@@ -1,6 +1,6 @@
 package com.spotride.spotride.user.controller;
 
-import com.spotride.spotride.user.model.UserModel;
+import com.spotride.spotride.user.model.User;
 import com.spotride.spotride.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 /**
- * Controller for {@link UserModel}.
+ * Controller for {@link User}.
  */
 @RestController
 @RequestMapping("/users")
@@ -30,7 +30,7 @@ public final class UserController {
      * @return list of users
      */
     @GetMapping
-    public List<UserModel> getAllUsers() {
+    public List<User> getAllUsers() {
         return userService.getAllUsers();
     }
 
@@ -41,7 +41,7 @@ public final class UserController {
      * @return user by id
      */
     @GetMapping("/{id}")
-    public UserModel getUserById(@PathVariable long id) {
+    public User getUserById(@PathVariable long id) {
         return userService.getUserById(id);
     }
 
@@ -51,7 +51,7 @@ public final class UserController {
      * @param user user to create
      */
     @PostMapping
-    public void createUser(@RequestBody UserModel user) {
+    public void createUser(@RequestBody User user) {
         userService.createUser(user);
     }
 
@@ -62,7 +62,7 @@ public final class UserController {
      * @param user user to be updated
      */
     @PutMapping("/{id}")
-    public void updateUser(@PathVariable long id, @RequestBody UserModel user) {
+    public void updateUser(@PathVariable long id, @RequestBody User user) {
         userService.updateUser(id, user);
     }
 

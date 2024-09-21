@@ -1,6 +1,6 @@
 package com.spotride.spotride.user.service;
 
-import com.spotride.spotride.user.model.UserModel;
+import com.spotride.spotride.user.model.User;
 import com.spotride.spotride.user.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -32,11 +32,11 @@ class UserServiceTest {
 
     @Test
     void testGetAllUsers() {
-        UserModel user1 = new UserModel(1L, "user1", "pass1", "user1@example.com", "First1", "Last1");
-        UserModel user2 = new UserModel(2L, "user2", "pass2", "user2@example.com", "First2", "Last2");
+        User user1 = new User(1L, "user1", "pass1", "user1@example.com", "First1", "Last1");
+        User user2 = new User(2L, "user2", "pass2", "user2@example.com", "First2", "Last2");
         when(userRepository.findAll()).thenReturn(List.of(user1, user2));
 
-        List<UserModel> users = userService.getAllUsers();
+        List<User> users = userService.getAllUsers();
         assertEquals(2, users.size());
         assertEquals(user1, users.get(0));
         assertEquals(user2, users.get(1));
@@ -44,10 +44,10 @@ class UserServiceTest {
 
     @Test
     void testGetUserById() {
-        UserModel user = new UserModel(1L, "user1", "pass1", "user1@example.com", "First1", "Last1");
+        User user = new User(1L, "user1", "pass1", "user1@example.com", "First1", "Last1");
         when(userRepository.findById(anyLong())).thenReturn(Optional.of(user));
 
-        UserModel foundUser = userService.getUserById(1L);
+        User foundUser = userService.getUserById(1L);
         assertEquals(user, foundUser);
     }
 
@@ -55,36 +55,36 @@ class UserServiceTest {
     void testGetUserByIdNotFound() {
         when(userRepository.findById(anyLong())).thenReturn(Optional.empty());
 
-        UserModel foundUser = userService.getUserById(1L);
+        User foundUser = userService.getUserById(1L);
         assertNull(foundUser);
     }
 
     @Test
     void testCreateUser() {
-        UserModel user = new UserModel(1L, "user1", "pass1", "user1@example.com", "First1", "Last1");
-        when(userRepository.save(any(UserModel.class))).thenReturn(user);
+        User user = new User(1L, "user1", "pass1", "user1@example.com", "First1", "Last1");
+        when(userRepository.save(any(User.class))).thenReturn(user);
 
-        UserModel createdUser = userService.createUser(user);
+        User createdUser = userService.createUser(user);
         assertEquals(user, createdUser);
     }
 
     @Test
     void testUpdateUser() {
-        UserModel existingUser = new UserModel(1L, "user1", "pass1", "user1@example.com", "First1", "Last1");
-        UserModel updatedUser = new UserModel(1L, "user1Updated", "pass1Updated", "user1Updated@example.com", "First1Updated", "Last1Updated");
+        User existingUser = new User(1L, "user1", "pass1", "user1@example.com", "First1", "Last1");
+        User updatedUser = new User(1L, "user1Updated", "pass1Updated", "user1Updated@example.com", "First1Updated", "Last1Updated");
         when(userRepository.findById(anyLong())).thenReturn(Optional.of(existingUser));
-        when(userRepository.save(any(UserModel.class))).thenReturn(updatedUser);
+        when(userRepository.save(any(User.class))).thenReturn(updatedUser);
 
-        UserModel result = userService.updateUser(1L, updatedUser);
+        User result = userService.updateUser(1L, updatedUser);
         assertEquals(updatedUser, result);
     }
 
     @Test
     void testUpdateUserNotFound() {
-        UserModel updatedUser = new UserModel(1L, "user1Updated", "pass1Updated", "user1Updated@example.com", "First1Updated", "Last1Updated");
+        User updatedUser = new User(1L, "user1Updated", "pass1Updated", "user1Updated@example.com", "First1Updated", "Last1Updated");
         when(userRepository.findById(anyLong())).thenReturn(Optional.empty());
 
-        UserModel result = userService.updateUser(1L, updatedUser);
+        User result = userService.updateUser(1L, updatedUser);
         assertNull(result);
     }
 

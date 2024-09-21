@@ -1,7 +1,7 @@
 package com.spotride.spotride.user.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.spotride.spotride.user.model.UserModel;
+import com.spotride.spotride.user.model.User;
 import com.spotride.spotride.user.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -45,8 +45,8 @@ public class UserControllerTest {
 
     @Test
     void testGetAllUsers() throws Exception {
-        UserModel user1 = new UserModel(1L, "user1", "pass1", "user1@example.com", "First1", "Last1");
-        UserModel user2 = new UserModel(2L, "user2", "pass2", "user2@example.com", "First2", "Last2");
+        User user1 = new User(1L, "user1", "pass1", "user1@example.com", "First1", "Last1");
+        User user2 = new User(2L, "user2", "pass2", "user2@example.com", "First2", "Last2");
         when(userService.getAllUsers()).thenReturn(List.of(user1, user2));
 
         mockMvc.perform(get("/users"))
@@ -56,7 +56,7 @@ public class UserControllerTest {
 
     @Test
     void testGetUserById() throws Exception {
-        UserModel user = new UserModel(1L, "user1", "pass1", "user1@example.com", "First1", "Last1");
+        User user = new User(1L, "user1", "pass1", "user1@example.com", "First1", "Last1");
         when(userService.getUserById(anyLong())).thenReturn(user);
 
         mockMvc.perform(get("/users/{id}", 1L))
@@ -66,8 +66,8 @@ public class UserControllerTest {
 
     @Test
     void testCreateUser() throws Exception {
-        UserModel user = new UserModel(1L, "user1", "pass1", "user1@example.com", "First1", "Last1");
-        when(userService.createUser(any(UserModel.class))).thenReturn(user);
+        User user = new User(1L, "user1", "pass1", "user1@example.com", "First1", "Last1");
+        when(userService.createUser(any(User.class))).thenReturn(user);
 
         mockMvc.perform(post("/users")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -77,8 +77,8 @@ public class UserControllerTest {
 
     @Test
     void testUpdateUser() throws Exception {
-        UserModel user = new UserModel(1L, "user1Updated", "pass1Updated", "user1Updated@example.com", "First1Updated", "Last1Updated");
-        when(userService.updateUser(anyLong(), any(UserModel.class))).thenReturn(user);
+        User user = new User(1L, "user1Updated", "pass1Updated", "user1Updated@example.com", "First1Updated", "Last1Updated");
+        when(userService.updateUser(anyLong(), any(User.class))).thenReturn(user);
 
         mockMvc.perform(put("/users/{id}", 1L)
                         .contentType(MediaType.APPLICATION_JSON)

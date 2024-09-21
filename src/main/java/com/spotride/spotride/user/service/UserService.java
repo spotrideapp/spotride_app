@@ -14,32 +14,17 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 public final class UserService {
+
     private final UserRepository userRepository;
 
-    /**
-     * Returns all users.
-     *
-     * @return list of users
-     */
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
 
-    /**
-     * Returns user by their id.
-     *
-     * @param id user id
-     * @return user by id
-     */
     public User getUserById(Long id) {
         return userRepository.findById(id).orElse(null);
     }
 
-    /**
-     * Create user.
-     *
-     * @param user user to create
-     */
     public User createUser(User user) {
         return userRepository.save(user);
     }
@@ -63,11 +48,6 @@ public final class UserService {
                 }).orElse(null);
     }
 
-    /**
-     * Delete user.
-     *
-     * @param id user id
-     */
     public void deleteUser(Long id) {
         userRepository.deleteById(id);
     }

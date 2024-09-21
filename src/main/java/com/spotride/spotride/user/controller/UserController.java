@@ -22,55 +22,29 @@ import java.util.List;
 @RequestMapping("/users")
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 public final class UserController {
+
     private final UserService userService;
 
-    /**
-     * Returns all users.
-     *
-     * @return list of users
-     */
     @GetMapping
     public List<User> getAllUsers() {
         return userService.getAllUsers();
     }
 
-    /**
-     * Returns user by their id.
-     *
-     * @param id user id
-     * @return user by id
-     */
     @GetMapping("/{id}")
     public User getUserById(@PathVariable long id) {
         return userService.getUserById(id);
     }
 
-    /**
-     * Create user.
-     *
-     * @param user user to create
-     */
     @PostMapping
     public User createUser(@RequestBody User user) {
         return userService.createUser(user);
     }
 
-    /**
-     * Update user by id.
-     *
-     * @param id user id
-     * @param user user to be updated
-     */
     @PutMapping("/{id}")
     public User updateUser(@PathVariable long id, @RequestBody User user) {
         return userService.updateUser(id, user);
     }
 
-    /**
-     * Delete user.
-     *
-     * @param id user id
-     */
     @DeleteMapping("/{id}")
     public void deleteUser(@PathVariable long id) {
         userService.deleteUser(id);

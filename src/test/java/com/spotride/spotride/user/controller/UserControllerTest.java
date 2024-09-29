@@ -4,11 +4,13 @@ import com.spotride.spotride.user.dto.UserRequestDto;
 import com.spotride.spotride.user.dto.UserResponseDto;
 import com.spotride.spotride.user.service.UserService;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.util.List;
+import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -20,13 +22,14 @@ import static org.mockito.Mockito.when;
 /**
  * Tests for {@link UserController}.
  */
+@SpringBootTest
 class UserControllerTest {
 
-    @Mock
+    @MockBean
     private UserService mockUserService;
 
-    @InjectMocks
-    private UserController mockUserController;
+    @Autowired
+    private UserController userController;
 
     public UserControllerTest() {
         MockitoAnnotations.openMocks(this);
@@ -37,7 +40,7 @@ class UserControllerTest {
         var userDto = new UserResponseDto(1L, "john", "john@example.com", "John", "Doe");
         when(mockUserService.getAllUsers()).thenReturn(List.of(userDto));
 
-        var result = mockUserController.getAllUsers();
+        var result = userController.getAllUsers();
 
         assertNotNull(result);
         assertEquals(1, result.size());
@@ -49,12 +52,12 @@ class UserControllerTest {
         var userDto = new UserResponseDto(1L, "john", "john@example.com", "John", "Doe");
         when(mockUserService.getUserById(1L)).thenReturn(userDto);
 
-        var response = mockUserController.getUserById(1L);
+        var response = userController.getUserById(1L);
 
         // Assert
         assertNotNull(response);
-        assertEquals(200, response.getStatusCodeValue());
-        assertEquals("john", response.getBody().getUsername());
+        assertEquals(200, response.getStatusCode().value());
+        assertEquals("john", Objects.requireNonNull(response.getBody()).getUsername());
         verify(mockUserService, times(1)).getUserById(1L);
     }
 
@@ -65,11 +68,11 @@ class UserControllerTest {
 
         when(mockUserService.createUser(userRequestDto)).thenReturn(createdUserDto);
 
-        var response = mockUserController.createUser(userRequestDto);
+        var response = userController.createUser(userRequestDto);
 
         assertNotNull(response);
-        assertEquals(200, response.getStatusCodeValue());
-        assertEquals("john", response.getBody().getUsername());
+        assertEquals(200, response.getStatusCode().value());
+        assertEquals("john", Objects.requireNonNull(response.getBody()).getUsername());
         verify(mockUserService, times(1)).createUser(userRequestDto);
     }
 
@@ -80,11 +83,11 @@ class UserControllerTest {
 
         when(mockUserService.updateUser(1L, userRequestDto)).thenReturn(updatedUserDto);
 
-        var response = mockUserController.updateUser(1L, userRequestDto);
+        var response = userController.updateUser(1L, userRequestDto);
 
         assertNotNull(response);
-        assertEquals(200, response.getStatusCodeValue());
-        assertEquals("john_updated", response.getBody().getUsername());
+        assertEquals(200, response.getStatusCode().value());
+        assertEquals("john_updated", Objects.requireNonNull(response.getBody()).getUsername());
         verify(mockUserService, times(1)).updateUser(1L, userRequestDto);
     }
 
@@ -92,10 +95,10 @@ class UserControllerTest {
     void testDeleteUser() {
         doNothing().when(mockUserService).deleteUser(1L);
 
-        var response = mockUserController.deleteUser(1L);
+        var response = userController.deleteUser(1L);
 
         assertNotNull(response);
-        assertEquals(204, response.getStatusCodeValue());
+        assertEquals(204, response.getStatusCode().value());
         verify(mockUserService, times(1)).deleteUser(1L);
     }
 }

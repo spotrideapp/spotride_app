@@ -6,9 +6,10 @@ import com.spotride.spotride.user.dto.UserResponseDto;
 import com.spotride.spotride.user.model.User;
 import com.spotride.spotride.user.repository.UserRepository;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.util.List;
 import java.util.Optional;
@@ -25,15 +26,16 @@ import static org.mockito.Mockito.when;
 /**
  * Tests for {@link UserService}.
  */
+@SpringBootTest
 class UserServiceTest {
 
-    @Mock
+    @MockBean
     private UserRepository mockUserRepository;
 
-    @Mock
+    @MockBean
     private UserMapper mockUserMapper;
 
-    @InjectMocks
+    @Autowired
     private UserService userService;
 
     public UserServiceTest() {
@@ -51,7 +53,7 @@ class UserServiceTest {
         var result = userService.getAllUsers();
 
         assertEquals(1, result.size());
-        assertEquals("john", result.get(0).getUsername());
+        assertEquals("john", result.getFirst().getUsername());
         verify(mockUserRepository, times(1)).findAll();
     }
 

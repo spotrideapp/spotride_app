@@ -17,8 +17,7 @@ import java.util.List;
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 public final class UserService {
 
-    private final UserMapper userMapper = UserMapper.INSTANCE;
-
+    private final UserMapper userMapper;
     private final UserRepository userRepository;
 
     /**

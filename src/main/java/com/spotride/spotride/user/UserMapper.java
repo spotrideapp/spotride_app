@@ -10,10 +10,8 @@ import org.mapstruct.factory.Mappers;
 /**
  * Mapper for {@link User}.
  */
-@Mapper
+@Mapper(componentModel = "spring")
 public interface UserMapper {
-
-    UserMapper INSTANCE = Mappers.getMapper(UserMapper.class);
 
     User toEntity(UserRequestDto userRequestDto);
 

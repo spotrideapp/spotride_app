@@ -9,6 +9,10 @@ import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+
+import java.time.ZonedDateTime;
 
 /**
  * User data.
@@ -38,4 +42,10 @@ public class User {
 
     @Column
     private String lastName;
+
+    @CreatedDate
+    private ZonedDateTime createdAt;
+
+    @LastModifiedDate
+    private ZonedDateTime modifiedAt;
 }

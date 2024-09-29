@@ -3,12 +3,16 @@ package com.spotride.spotride.user.controller;
 import com.spotride.spotride.user.dto.UserRequestDto;
 import com.spotride.spotride.user.dto.UserResponseDto;
 import com.spotride.spotride.user.service.UserService;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.annotation.Rollback;
 
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Objects;
 
@@ -31,13 +35,20 @@ class UserControllerTest {
     @Autowired
     private UserController userController;
 
+    private ZonedDateTime testZonedDateTime;
+
     public UserControllerTest() {
         MockitoAnnotations.openMocks(this);
     }
 
+    @BeforeEach
+    public void setUp() {
+        testZonedDateTime = ZonedDateTime.of(2024, 9, 29, 10, 0, 0, 0, ZoneId.of("UTC"));
+    }
+
     @Test
     void testGetAllUsers() {
-        var userDto = new UserResponseDto(1L, "john", "john@example.com", "John", "Doe");
+        var userDto = new UserResponseDto(1L, "john", "john@example.com", "John", "Doe", testZonedDateTime, testZonedDateTime);
         when(mockUserService.getAllUsers()).thenReturn(List.of(userDto));
 
         var result = userController.getAllUsers();
@@ -49,7 +60,7 @@ class UserControllerTest {
 
     @Test
     void testGetUserById() {
-        var userDto = new UserResponseDto(1L, "john", "john@example.com", "John", "Doe");
+        var userDto = new UserResponseDto(1L, "john", "john@example.com", "John", "Doe", testZonedDateTime, testZonedDateTime);
         when(mockUserService.getUserById(1L)).thenReturn(userDto);
 
         var response = userController.getUserById(1L);
@@ -63,8 +74,8 @@ class UserControllerTest {
 
     @Test
     void testCreateUser() {
-        var userRequestDto = new UserRequestDto(null, "john", "password", "john@example.com", "John", "Doe");
-        var createdUserDto = new UserResponseDto(1L, "john", "john@example.com", "John", "Doe");
+        var userRequestDto = new UserRequestDto(null, "john", "password", "john@example.com", "John", "Doe", testZonedDateTime, testZonedDateTime);
+        var createdUserDto = new UserResponseDto(1L, "john", "john@example.com", "John", "Doe", testZonedDateTime, testZonedDateTime);
 
         when(mockUserService.createUser(userRequestDto)).thenReturn(createdUserDto);
 
@@ -78,8 +89,8 @@ class UserControllerTest {
 
     @Test
     void testUpdateUser() {
-        var userRequestDto = new UserRequestDto(null, "john_updated", "password", "john_updated@example.com", "John", "Doe");
-        var updatedUserDto = new UserResponseDto(1L, "john_updated", "john_updated@example.com", "John", "Doe");
+        var userRequestDto = new UserRequestDto(null, "john_updated", "password", "john_updated@example.com", "John", "Doe", testZonedDateTime, testZonedDateTime);
+        var updatedUserDto = new UserResponseDto(1L, "john_updated", "john_updated@example.com", "John", "Doe", testZonedDateTime, testZonedDateTime);
 
         when(mockUserService.updateUser(1L, userRequestDto)).thenReturn(updatedUserDto);
 

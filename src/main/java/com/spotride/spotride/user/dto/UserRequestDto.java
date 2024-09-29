@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.ZonedDateTime;
+
 /**
  * User request DTO model.
  */
@@ -28,4 +30,6 @@ public class UserRequestDto {
 
     private String firstName;
     private String lastName;
+    private ZonedDateTime createdAt;
+    private ZonedDateTime modifiedAt;
 }

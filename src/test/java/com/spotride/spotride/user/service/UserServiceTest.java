@@ -5,12 +5,15 @@ import com.spotride.spotride.user.dto.UserRequestDto;
 import com.spotride.spotride.user.dto.UserResponseDto;
 import com.spotride.spotride.user.model.User;
 import com.spotride.spotride.user.repository.UserRepository;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -38,14 +41,21 @@ class UserServiceTest {
     @Autowired
     private UserService userService;
 
+    private ZonedDateTime testZonedDateTime;
+
     public UserServiceTest() {
         MockitoAnnotations.openMocks(this);
     }
 
+    @BeforeEach
+    void setUp() {
+        testZonedDateTime = ZonedDateTime.of(2024, 9, 29, 10, 0, 0, 0, ZoneId.of("UTC"));
+    }
+
     @Test
     void testGetAllUsers() {
-        var user = new User(1L, "john", "password", "john@example.com", "John", "Doe");
-        var userDto = new UserResponseDto(1L, "john", "john@example.com", "John", "Doe");
+        var user = new User(1L, "john", "password", "john@example.com", "John", "Doe", ZonedDateTime.now(), null);
+        var userDto = new UserResponseDto(1L, "john", "john@example.com", "John", "Doe", testZonedDateTime, testZonedDateTime);
 
         when(mockUserRepository.findAll()).thenReturn(List.of(user));
         when(mockUserMapper.toDto(user)).thenReturn(userDto);
@@ -59,8 +69,8 @@ class UserServiceTest {
 
     @Test
     void testGetUserById() {
-        var user = new User(1L, "john", "password", "john@example.com", "John", "Doe");
-        var userDto = new UserResponseDto(1L, "john", "john@example.com", "John", "Doe");
+        var user = new User(1L, "john", "password", "john@example.com", "John", "Doe", ZonedDateTime.now(), null);
+        var userDto = new UserResponseDto(1L, "john", "john@example.com", "John", "Doe", testZonedDateTime, testZonedDateTime);
 
         when(mockUserRepository.findById(1L)).thenReturn(Optional.of(user));
         when(mockUserMapper.toDto(user)).thenReturn(userDto);
@@ -74,10 +84,10 @@ class UserServiceTest {
 
     @Test
     void testCreateUser() {
-        var userRequestDto = new UserRequestDto(null, "testUsername", "testPassword", "testEmail", "Test", "User");
-        var user = new User(null, "testUsername", "testPassword", "testEmail", "Test", "User");
-        var savedUser = new User(1L, "testUsername", "testPassword", "testEmail", "Test", "User"); // Добавляем ID
-        var userResponseDto = new UserResponseDto(1L, "testUsername", "testEmail", "Test", "User");
+        var userRequestDto = new UserRequestDto(null, "testUsername", "testPassword", "testEmail", "Test", "User", testZonedDateTime, testZonedDateTime);
+        var user = new User(null, "testUsername", "testPassword", "testEmail", "Test", "User", testZonedDateTime, testZonedDateTime);
+        var savedUser = new User(1L, "testUsername", "testPassword", "testEmail", "Test", "User", testZonedDateTime, testZonedDateTime); // Добавляем ID
+        var userResponseDto = new UserResponseDto(1L, "testUsername", "testEmail", "Test", "User", testZonedDateTime, testZonedDateTime);
 
         when(mockUserMapper.toEntity(userRequestDto)).thenReturn(user);
         when(mockUserRepository.save(any(User.class))).thenReturn(savedUser);
@@ -93,14 +103,13 @@ class UserServiceTest {
 
     @Test
     void testUpdateUser() {
-        var userRequestDto = new UserRequestDto(null, "john_updated", "password", "john_updated@example.com", "John", "Doe");
-        var user = new User(1L, "john", "password", "john@example.com", "John", "Doe");
-        var updatedUser = new User(1L, "john_updated", "password", "john_updated@example.com", "John", "Doe");
-        var updatedUserDto = new UserResponseDto(1L, "john_updated", "john_updated@example.com", "John", "Doe");
+        var userRequestDto = new UserRequestDto(null, "john_updated", "password", "john_updated@example.com", "John", "Doe", testZonedDateTime, testZonedDateTime);
+        var user = new User(1L, "john", "password", "john@example.com", "John", "Doe", testZonedDateTime, testZonedDateTime);
+        var updatedUser = new User(1L, "john_updated", "password", "john_updated@example.com", "John", "Doe", testZonedDateTime, testZonedDateTime);
+        var updatedUserDto = new UserResponseDto(1L, "john_updated", "john_updated@example.com", "John", "Doe", testZonedDateTime, testZonedDateTime);
 
         when(mockUserRepository.findById(1L)).thenReturn(Optional.of(user));
         doAnswer(invocation -> {
-            // Update the user with the new DTO values
             user.setUsername(userRequestDto.getUsername());
             user.setEmail(userRequestDto.getEmail());
             return null;

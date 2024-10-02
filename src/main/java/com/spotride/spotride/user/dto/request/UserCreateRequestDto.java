@@ -1,4 +1,4 @@
-package com.spotride.spotride.user.dto;
+package com.spotride.spotride.user.dto.request;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -9,14 +9,12 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 
 /**
- * User request DTO model.
+ * User request DTO to create model.
  */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserRequestDto {
-
-    private Long id;
+public class UserCreateRequestDto {
 
     @NotBlank(message = "Username is required")
     private String username;

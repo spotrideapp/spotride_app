@@ -1,7 +1,8 @@
 package com.spotride.spotride.user.controller;
 
-import com.spotride.spotride.user.dto.UserRequestDto;
+import com.spotride.spotride.user.dto.request.UserCreateRequestDto;
 import com.spotride.spotride.user.dto.UserResponseDto;
+import com.spotride.spotride.user.dto.request.UserUpdateRequestDto;
 import com.spotride.spotride.user.model.User;
 import com.spotride.spotride.user.service.UserService;
 import jakarta.validation.Valid;
@@ -55,7 +56,7 @@ public final class UserController {
      * @return {@link ResponseEntity} for created user
      */
     @PostMapping
-    public ResponseEntity<UserResponseDto> createUser(@RequestBody @Valid UserRequestDto userDto) {
+    public ResponseEntity<UserResponseDto> createUser(@RequestBody @Valid UserCreateRequestDto userDto) {
         var createdUser = userService.createUser(userDto);
 
         return ResponseEntity.ok(createdUser);
@@ -69,7 +70,7 @@ public final class UserController {
      * @return {@link ResponseEntity} for updated user
      */
     @PutMapping("/{id}")
-    public ResponseEntity<UserResponseDto> updateUser(@PathVariable long id, @RequestBody @Valid UserRequestDto userDto) {
+    public ResponseEntity<UserResponseDto> updateUser(@PathVariable long id, @RequestBody @Valid UserUpdateRequestDto userDto) {
         var updatedUser = userService.updateUser(id, userDto);
 
         return nonNull(updatedUser) ? ResponseEntity.ok(updatedUser) : ResponseEntity.notFound().build();

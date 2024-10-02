@@ -1,11 +1,11 @@
 package com.spotride.spotride.user;
 
-import com.spotride.spotride.user.dto.UserRequestDto;
+import com.spotride.spotride.user.dto.request.UserCreateRequestDto;
 import com.spotride.spotride.user.dto.UserResponseDto;
+import com.spotride.spotride.user.dto.request.UserUpdateRequestDto;
 import com.spotride.spotride.user.model.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
-import org.mapstruct.factory.Mappers;
 
 /**
  * Mapper for {@link User}.
@@ -13,9 +13,15 @@ import org.mapstruct.factory.Mappers;
 @Mapper(componentModel = "spring")
 public interface UserMapper {
 
-    User toEntity(UserRequestDto userRequestDto);
+    // Маппинг для создания пользователя
+    User toEntity(UserCreateRequestDto userCreateRequestDto);
 
+    // Маппинг для обновления пользователя
+    User toEntity(UserUpdateRequestDto userUpdateRequestDto);
+
+    // Для возврата ответа в DTO
     UserResponseDto toDto(User user);
 
-    void updateEntityFromDto(UserRequestDto userRequestDto, @MappingTarget User user);
+    // Обновление сущности на основе UserUpdateRequestDto
+    void updateEntityFromDto(UserUpdateRequestDto userUpdateRequestDto, @MappingTarget User user);
 }

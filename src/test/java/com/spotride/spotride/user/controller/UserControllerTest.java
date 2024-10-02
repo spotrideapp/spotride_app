@@ -1,7 +1,8 @@
 package com.spotride.spotride.user.controller;
 
-import com.spotride.spotride.user.dto.UserRequestDto;
+import com.spotride.spotride.user.dto.request.UserCreateRequestDto;
 import com.spotride.spotride.user.dto.UserResponseDto;
+import com.spotride.spotride.user.dto.request.UserUpdateRequestDto;
 import com.spotride.spotride.user.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -72,7 +73,7 @@ class UserControllerTest {
 
     @Test
     void testCreateUser() {
-        var userRequestDto = new UserRequestDto(null, "john", "password", "john@example.com", "John", "Doe", testZonedDateTime, testZonedDateTime);
+        var userRequestDto = new UserCreateRequestDto("john", "password", "john@example.com", "John", "Doe", testZonedDateTime, testZonedDateTime);
         var createdUserDto = new UserResponseDto(1L, "john", "john@example.com", "John", "Doe", testZonedDateTime, testZonedDateTime);
 
         when(mockUserService.createUser(userRequestDto)).thenReturn(createdUserDto);
@@ -87,7 +88,7 @@ class UserControllerTest {
 
     @Test
     void testUpdateUser() {
-        var userRequestDto = new UserRequestDto(null, "john_updated", "password", "john_updated@example.com", "John", "Doe", testZonedDateTime, testZonedDateTime);
+        var userRequestDto = new UserUpdateRequestDto(null, "john_updated", "password", "john_updated@example.com", "John", "Doe", testZonedDateTime, testZonedDateTime);
         var updatedUserDto = new UserResponseDto(1L, "john_updated", "john_updated@example.com", "John", "Doe", testZonedDateTime, testZonedDateTime);
 
         when(mockUserService.updateUser(1L, userRequestDto)).thenReturn(updatedUserDto);

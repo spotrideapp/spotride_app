@@ -1,8 +1,9 @@
 package com.spotride.spotride.user.service;
 
 import com.spotride.spotride.user.UserMapper;
-import com.spotride.spotride.user.dto.UserRequestDto;
+import com.spotride.spotride.user.dto.request.UserCreateRequestDto;
 import com.spotride.spotride.user.dto.UserResponseDto;
+import com.spotride.spotride.user.dto.request.UserUpdateRequestDto;
 import com.spotride.spotride.user.model.User;
 import com.spotride.spotride.user.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -83,7 +84,7 @@ class UserServiceTest {
 
     @Test
     void testCreateUser() {
-        var userRequestDto = new UserRequestDto(null, "testUsername", "testPassword", "testEmail", "Test", "User", testZonedDateTime, testZonedDateTime);
+        var userRequestDto = new UserCreateRequestDto("testUsername", "testPassword", "testEmail", "Test", "User", testZonedDateTime, testZonedDateTime);
         var user = new User(null, "testUsername", "testPassword", "testEmail", "Test", "User", testZonedDateTime, testZonedDateTime);
         var savedUser = new User(1L, "testUsername", "testPassword", "testEmail", "Test", "User", testZonedDateTime, testZonedDateTime); // Добавляем ID
         var userResponseDto = new UserResponseDto(1L, "testUsername", "testEmail", "Test", "User", testZonedDateTime, testZonedDateTime);
@@ -102,7 +103,7 @@ class UserServiceTest {
 
     @Test
     void testUpdateUser() {
-        var userRequestDto = new UserRequestDto(null, "john_updated", "password", "john_updated@example.com", "John", "Doe", testZonedDateTime, testZonedDateTime);
+        var userRequestDto = new UserUpdateRequestDto(null, "john_updated", "password", "john_updated@example.com", "John", "Doe", testZonedDateTime, testZonedDateTime);
         var user = new User(1L, "john", "password", "john@example.com", "John", "Doe", testZonedDateTime, testZonedDateTime);
         var updatedUser = new User(1L, "john_updated", "password", "john_updated@example.com", "John", "Doe", testZonedDateTime, testZonedDateTime);
         var updatedUserDto = new UserResponseDto(1L, "john_updated", "john_updated@example.com", "John", "Doe", testZonedDateTime, testZonedDateTime);

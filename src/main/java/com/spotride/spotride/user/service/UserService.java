@@ -1,8 +1,9 @@
 package com.spotride.spotride.user.service;
 
 import com.spotride.spotride.user.UserMapper;
-import com.spotride.spotride.user.dto.UserRequestDto;
+import com.spotride.spotride.user.dto.request.UserCreateRequestDto;
 import com.spotride.spotride.user.dto.UserResponseDto;
+import com.spotride.spotride.user.dto.request.UserUpdateRequestDto;
 import com.spotride.spotride.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,10 +47,10 @@ public final class UserService {
     /**
      * Created user.
      *
-     * @param userRequestDto {@link UserRequestDto} for user
+     * @param userRequestDto {@link UserCreateRequestDto} for user
      * @return {@link UserResponseDto} for created user
      */
-    public UserResponseDto createUser(UserRequestDto userRequestDto) {
+    public UserResponseDto createUser(UserCreateRequestDto userRequestDto) {
         var user = userMapper.toEntity(userRequestDto);
 
         return userMapper.toDto(userRepository.save(user));
@@ -61,7 +62,7 @@ public final class UserService {
      * @param id user id
      * @param updatedUserDto user to be updated
      */
-    public UserResponseDto updateUser(Long id, UserRequestDto updatedUserDto) {
+    public UserResponseDto updateUser(Long id, UserUpdateRequestDto updatedUserDto) {
         return userRepository.findById(id)
                 .map(user -> {
                     userMapper.updateEntityFromDto(updatedUserDto, user);

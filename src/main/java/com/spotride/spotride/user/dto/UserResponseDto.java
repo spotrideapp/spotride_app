@@ -4,8 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
-
 /**
  * User response DTO model.
  */
@@ -19,6 +17,4 @@ public class UserResponseDto {
     private String email;
     private String firstName;
     private String lastName;
-    private LocalDateTime createdAt;
-    private LocalDateTime modifiedAt;
 }

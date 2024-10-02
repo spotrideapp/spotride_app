@@ -13,15 +13,11 @@ import org.mapstruct.MappingTarget;
 @Mapper(componentModel = "spring")
 public interface UserMapper {
 
-    // Маппинг для создания пользователя
     User toEntity(UserCreateRequestDto userCreateRequestDto);
 
-    // Маппинг для обновления пользователя
     User toEntity(UserUpdateRequestDto userUpdateRequestDto);
 
-    // Для возврата ответа в DTO
     UserResponseDto toDto(User user);
 
-    // Обновление сущности на основе UserUpdateRequestDto
     void updateEntityFromDto(UserUpdateRequestDto userUpdateRequestDto, @MappingTarget User user);
 }

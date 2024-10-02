@@ -28,7 +28,6 @@ import static org.mockito.Mockito.when;
 /**
  * Tests for {@link UserService}.
  */
-@ActiveProfiles("test")
 @SpringBootTest
 class UserServiceTest {
 

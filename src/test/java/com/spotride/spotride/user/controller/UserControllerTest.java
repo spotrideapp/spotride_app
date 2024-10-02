@@ -23,7 +23,6 @@ import static org.mockito.Mockito.when;
 /**
  * Tests for {@link UserController}.
  */
-@ActiveProfiles("test")
 @SpringBootTest
 class UserControllerTest {
 

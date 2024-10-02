@@ -43,8 +43,24 @@ class UserServiceTest {
 
     @Test
     void testGetAllUsers() {
-        var user = new User(1L, "john", "password", "john@example.com", "John", "Doe", LocalDateTime.now(), null);
-        var userDto = new UserResponseDto(1L, "john", "john@example.com", "John", "Doe");
+        var user = User.builder()
+                .id(1L)
+                .username("john")
+                .password("password")
+                .email("john@example.com")
+                .firstName("John")
+                .lastName("Doe")
+                .createdAt(DATE_TIME_NOW)
+                .modifiedAt(null)
+                .build();
+
+        var userDto = UserResponseDto.builder()
+                .id(1L)
+                .username("john")
+                .email("john@example.com")
+                .firstName("John")
+                .lastName("Doe")
+                .build();
 
         when(mockUserRepository.findAll()).thenReturn(List.of(user));
         when(mockUserMapper.toDto(user)).thenReturn(userDto);
@@ -58,13 +74,29 @@ class UserServiceTest {
 
     @Test
     void testGetUserById() {
-        var user = new User(1L, "john", "password", "john@example.com", "John", "Doe", LocalDateTime.now(), null);
-        var userDto = new UserResponseDto(1L, "john", "john@example.com", "John", "Doe");
+        var user = User.builder()
+                .id(1L)
+                .username("john")
+                .password("password")
+                .email("john@example.com")
+                .firstName("John")
+                .lastName("Doe")
+                .createdAt(DATE_TIME_NOW)
+                .modifiedAt(null)
+                .build();
+
+        var userDto = UserResponseDto.builder()
+                .id(1L)
+                .username("john")
+                .email("john@example.com")
+                .firstName("John")
+                .lastName("Doe")
+                .build();
 
         when(mockUserRepository.findById(1L)).thenReturn(Optional.of(user));
         when(mockUserMapper.toDto(user)).thenReturn(userDto);
 
-        UserResponseDto result = userService.getUserById(1L);
+        var result = userService.getUserById(1L);
 
         assertNotNull(result);
         assertEquals("john", result.getUsername());
@@ -73,40 +105,107 @@ class UserServiceTest {
 
     @Test
     void testCreateUser() {
-        var userRequestDto = new UserCreateRequestDto("testUsername", "testPassword", "testEmail", "Test", "User");
-        var user = new User(null, "testUsername", "testPassword", "testEmail", "Test", "User", DATE_TIME_NOW, DATE_TIME_NOW);
-        var savedUser = new User(1L, "testUsername", "testPassword", "testEmail", "Test", "User", DATE_TIME_NOW, DATE_TIME_NOW); // Добавляем ID
-        var userResponseDto = new UserResponseDto(1L, "testUsername", "testEmail", "Test", "User");
+        var userCreateRequestDto = UserCreateRequestDto.builder()
+                .username("john")
+                .password("password")
+                .email("john@example.com")
+                .firstName("John")
+                .lastName("Doe")
+                .build();
 
-        when(mockUserMapper.toEntity(userRequestDto)).thenReturn(user);
+        var user = User.builder()
+                .id(1L)
+                .username("john")
+                .password("password")
+                .email("john@example.com")
+                .firstName("John")
+                .lastName("Doe")
+                .createdAt(DATE_TIME_NOW)
+                .modifiedAt(null)
+                .build();
+
+        var savedUser = User.builder()
+                .id(1L)
+                .username("john")
+                .password("password")
+                .email("john@example.com")
+                .firstName("John")
+                .lastName("Doe")
+                .createdAt(DATE_TIME_NOW)
+                .modifiedAt(DATE_TIME_NOW)
+                .build();
+
+        var userResponseDto = UserResponseDto.builder()
+                .id(1L)
+                .username("john")
+                .email("john@example.com")
+                .firstName("John")
+                .lastName("Doe")
+                .build();
+
+        when(mockUserMapper.toEntity(userCreateRequestDto)).thenReturn(user);
         when(mockUserRepository.save(any(User.class))).thenReturn(savedUser);
         when(mockUserMapper.toDto(savedUser)).thenReturn(userResponseDto);
 
-        var createdUser = userService.createUser(userRequestDto);
+        var createdUser = userService.createUser(userCreateRequestDto);
 
         assertNotNull(createdUser);
-        assertEquals("testUsername", createdUser.getUsername());
-        assertEquals("testEmail", createdUser.getEmail());
+        assertEquals("john", createdUser.getUsername());
+        assertEquals("john@example.com", createdUser.getEmail());
         verify(mockUserRepository, times(1)).save(user);
     }
 
     @Test
     void testUpdateUser() {
-        var userRequestDto = new UserUpdateRequestDto(null, "john_updated", "password", "john_updated@example.com", "John", "Doe");
-        var user = new User(1L, "john", "password", "john@example.com", "John", "Doe", DATE_TIME_NOW, DATE_TIME_NOW);
-        var updatedUser = new User(1L, "john_updated", "password", "john_updated@example.com", "John", "Doe", DATE_TIME_NOW, DATE_TIME_NOW);
-        var updatedUserDto = new UserResponseDto(1L, "john_updated", "john_updated@example.com", "John", "Doe");
+        var userUpdateRequestDto = UserUpdateRequestDto.builder()
+                .id(null)
+                .username("john_updated")
+                .password("password")
+                .email("john_updated@example.com")
+                .firstName("John")
+                .lastName("Doe")
+                .build();
+
+        var user = User.builder()
+                .id(1L)
+                .username("john")
+                .password("password")
+                .email("john@example.com")
+                .firstName("John")
+                .lastName("Doe")
+                .createdAt(DATE_TIME_NOW)
+                .modifiedAt(null)
+                .build();
+
+        var updatedUser = User.builder()
+                .id(1L)
+                .username("john_updated")
+                .password("password")
+                .email("john_updated@example.com")
+                .firstName("John")
+                .lastName("Doe")
+                .createdAt(DATE_TIME_NOW)
+                .modifiedAt(DATE_TIME_NOW)
+                .build();
+
+        var updatedUserDto = UserResponseDto.builder()
+                .id(1L)
+                .username("john_updated")
+                .email("john_updated@example.com")
+                .firstName("John")
+                .lastName("Doe")
+                .build();
 
         when(mockUserRepository.findById(1L)).thenReturn(Optional.of(user));
         doAnswer(invocation -> {
-            user.setUsername(userRequestDto.getUsername());
-            user.setEmail(userRequestDto.getEmail());
+            user.setUsername(userUpdateRequestDto.getUsername());
+            user.setEmail(userUpdateRequestDto.getEmail());
             return null;
-        }).when(mockUserMapper).updateEntityFromDto(userRequestDto, user);
+        }).when(mockUserMapper).updateEntityFromDto(userUpdateRequestDto, user);
         when(mockUserRepository.save(user)).thenReturn(updatedUser);
         when(mockUserMapper.toDto(updatedUser)).thenReturn(updatedUserDto);
 
-        UserResponseDto result = userService.updateUser(1L, userRequestDto);
+        var result = userService.updateUser(1L, userUpdateRequestDto);
 
         assertNotNull(result);
         assertEquals("john_updated", result.getUsername());

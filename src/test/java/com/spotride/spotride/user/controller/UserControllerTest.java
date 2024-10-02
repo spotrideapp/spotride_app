@@ -33,7 +33,14 @@ class UserControllerTest {
 
     @Test
     void testGetAllUsers() {
-        var userDto = new UserResponseDto(1L, "john", "john@example.com", "John", "Doe");
+        var userDto = UserResponseDto.builder()
+                .id(1L)
+                .username("john")
+                .email("john@example.com")
+                .firstName("John")
+                .lastName("Doe")
+                .build();
+
         when(mockUserService.getAllUsers()).thenReturn(List.of(userDto));
 
         var result = userController.getAllUsers();
@@ -45,12 +52,18 @@ class UserControllerTest {
 
     @Test
     void testGetUserById() {
-        var userDto = new UserResponseDto(1L, "john", "john@example.com", "John", "Doe");
+        var userDto = UserResponseDto.builder()
+                .id(1L)
+                .username("john")
+                .email("john@example.com")
+                .firstName("John")
+                .lastName("Doe")
+                .build();
+
         when(mockUserService.getUserById(1L)).thenReturn(userDto);
 
         var response = userController.getUserById(1L);
 
-        // Assert
         assertNotNull(response);
         assertEquals(200, response.getStatusCode().value());
         assertEquals("john", Objects.requireNonNull(response.getBody()).getUsername());
@@ -59,32 +72,60 @@ class UserControllerTest {
 
     @Test
     void testCreateUser() {
-        var userRequestDto = new UserCreateRequestDto("john", "password", "john@example.com", "John", "Doe");
-        var createdUserDto = new UserResponseDto(1L, "john", "john@example.com", "John", "Doe");
+        var userCreateRequestDto = UserCreateRequestDto.builder()
+                .username("john")
+                .password("password")
+                .email("john@example.com")
+                .firstName("John")
+                .lastName("Doe")
+                .build();
 
-        when(mockUserService.createUser(userRequestDto)).thenReturn(createdUserDto);
+        var createdUserDto = UserResponseDto.builder()
+                .id(1L)
+                .username("john")
+                .email("john@example.com")
+                .firstName("John")
+                .lastName("Doe")
+                .build();
 
-        var response = userController.createUser(userRequestDto);
+
+        when(mockUserService.createUser(userCreateRequestDto)).thenReturn(createdUserDto);
+
+        var response = userController.createUser(userCreateRequestDto);
 
         assertNotNull(response);
         assertEquals(200, response.getStatusCode().value());
         assertEquals("john", Objects.requireNonNull(response.getBody()).getUsername());
-        verify(mockUserService, times(1)).createUser(userRequestDto);
+        verify(mockUserService, times(1)).createUser(userCreateRequestDto);
     }
 
     @Test
     void testUpdateUser() {
-        var userRequestDto = new UserUpdateRequestDto(null, "john_updated", "password", "john_updated@example.com", "John", "Doe");
-        var updatedUserDto = new UserResponseDto(1L, "john_updated", "john_updated@example.com", "John", "Doe");
+        var userUpdateRequestDto = UserUpdateRequestDto.builder()
+                .id(null)
+                .username("john_updated")
+                .password("password")
+                .email("john_updated@example.com")
+                .firstName("John")
+                .lastName("Doe")
+                .build();
 
-        when(mockUserService.updateUser(1L, userRequestDto)).thenReturn(updatedUserDto);
+        var updatedUserDto = UserResponseDto.builder()
+                .id(1L)
+                .username("john_updated")
+                .email("john_updated@example.com")
+                .firstName("John")
+                .lastName("Doe")
+                .build();
 
-        var response = userController.updateUser(1L, userRequestDto);
+        when(mockUserService.updateUser(1L, userUpdateRequestDto)).thenReturn(updatedUserDto);
+
+        var response = userController.updateUser(1L, userUpdateRequestDto);
 
         assertNotNull(response);
         assertEquals(200, response.getStatusCode().value());
         assertEquals("john_updated", Objects.requireNonNull(response.getBody()).getUsername());
-        verify(mockUserService, times(1)).updateUser(1L, userRequestDto);
+        verify(mockUserService, times(1)).updateUser(1L, userUpdateRequestDto);
     }
 
     @Test

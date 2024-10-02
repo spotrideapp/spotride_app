@@ -73,8 +73,8 @@ class UserControllerTest {
 
     @Test
     void testCreateUser() {
-        var userRequestDto = new UserCreateRequestDto("john", "password", "john@example.com", "John", "Doe", testZonedDateTime, testZonedDateTime);
-        var createdUserDto = new UserResponseDto(1L, "john", "john@example.com", "John", "Doe", testZonedDateTime, testZonedDateTime);
+        var userRequestDto = new UserCreateRequestDto("john", "password", "john@example.com", "John", "Doe");
+        var createdUserDto = new UserResponseDto(1L, "john", "john@example.com", "John", "Doe",  testZonedDateTime, testZonedDateTime);
 
         when(mockUserService.createUser(userRequestDto)).thenReturn(createdUserDto);
 
@@ -88,7 +88,7 @@ class UserControllerTest {
 
     @Test
     void testUpdateUser() {
-        var userRequestDto = new UserUpdateRequestDto(null, "john_updated", "password", "john_updated@example.com", "John", "Doe", testZonedDateTime, testZonedDateTime);
+        var userRequestDto = new UserUpdateRequestDto(null, "john_updated", "password", "john_updated@example.com", "John", "Doe");
         var updatedUserDto = new UserResponseDto(1L, "john_updated", "john_updated@example.com", "John", "Doe", testZonedDateTime, testZonedDateTime);
 
         when(mockUserService.updateUser(1L, userRequestDto)).thenReturn(updatedUserDto);

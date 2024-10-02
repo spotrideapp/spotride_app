@@ -84,7 +84,7 @@ class UserServiceTest {
 
     @Test
     void testCreateUser() {
-        var userRequestDto = new UserCreateRequestDto("testUsername", "testPassword", "testEmail", "Test", "User", testZonedDateTime, testZonedDateTime);
+        var userRequestDto = new UserCreateRequestDto("testUsername", "testPassword", "testEmail", "Test", "User");
         var user = new User(null, "testUsername", "testPassword", "testEmail", "Test", "User", testZonedDateTime, testZonedDateTime);
         var savedUser = new User(1L, "testUsername", "testPassword", "testEmail", "Test", "User", testZonedDateTime, testZonedDateTime); // Добавляем ID
         var userResponseDto = new UserResponseDto(1L, "testUsername", "testEmail", "Test", "User", testZonedDateTime, testZonedDateTime);
@@ -103,7 +103,7 @@ class UserServiceTest {
 
     @Test
     void testUpdateUser() {
-        var userRequestDto = new UserUpdateRequestDto(null, "john_updated", "password", "john_updated@example.com", "John", "Doe", testZonedDateTime, testZonedDateTime);
+        var userRequestDto = new UserUpdateRequestDto(null, "john_updated", "password", "john_updated@example.com", "John", "Doe");
         var user = new User(1L, "john", "password", "john@example.com", "John", "Doe", testZonedDateTime, testZonedDateTime);
         var updatedUser = new User(1L, "john_updated", "password", "john_updated@example.com", "John", "Doe", testZonedDateTime, testZonedDateTime);
         var updatedUserDto = new UserResponseDto(1L, "john_updated", "john_updated@example.com", "John", "Doe", testZonedDateTime, testZonedDateTime);

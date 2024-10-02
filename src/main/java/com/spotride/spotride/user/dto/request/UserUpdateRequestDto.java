@@ -7,8 +7,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
-
 /**
  * User request DTO to update model.
  */
@@ -32,6 +30,4 @@ public class UserUpdateRequestDto {
 
     private String firstName;
     private String lastName;
-    private LocalDateTime createdAt;
-    private LocalDateTime modifiedAt;
 }

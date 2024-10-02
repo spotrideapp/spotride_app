@@ -15,9 +15,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.time.ZonedDateTime;
 import java.util.List;
+
+import static java.util.Objects.nonNull;
 
 /**
  * Controller for {@link User}.
@@ -44,7 +44,7 @@ public final class UserController {
     public ResponseEntity<UserResponseDto> getUserById(@PathVariable long id) {
         var userResponseDto = userService.getUserById(id);
 
-        return userResponseDto != null ? ResponseEntity.ok(userResponseDto) : ResponseEntity.notFound().build();
+        return nonNull(userResponseDto) ? ResponseEntity.ok(userResponseDto) : ResponseEntity.notFound().build();
     }
 
     /**
@@ -71,7 +71,7 @@ public final class UserController {
     public ResponseEntity<UserResponseDto> updateUser(@PathVariable long id, @RequestBody @Valid UserRequestDto userDto) {
         var updatedUser = userService.updateUser(id, userDto);
 
-        return updatedUser != null ? ResponseEntity.ok(updatedUser) : ResponseEntity.notFound().build();
+        return nonNull(updatedUser) ? ResponseEntity.ok(updatedUser) : ResponseEntity.notFound().build();
     }
 
     /**

@@ -12,8 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -41,7 +40,7 @@ class UserServiceTest {
     @Autowired
     private UserService userService;
 
-    private ZonedDateTime testZonedDateTime;
+    private LocalDateTime testZonedDateTime;
 
     public UserServiceTest() {
         MockitoAnnotations.openMocks(this);
@@ -49,12 +48,12 @@ class UserServiceTest {
 
     @BeforeEach
     void setUp() {
-        testZonedDateTime = ZonedDateTime.of(2024, 9, 29, 10, 0, 0, 0, ZoneId.of("UTC"));
+        testZonedDateTime = LocalDateTime.now();
     }
 
     @Test
     void testGetAllUsers() {
-        var user = new User(1L, "john", "password", "john@example.com", "John", "Doe", ZonedDateTime.now(), null);
+        var user = new User(1L, "john", "password", "john@example.com", "John", "Doe", LocalDateTime.now(), null);
         var userDto = new UserResponseDto(1L, "john", "john@example.com", "John", "Doe", testZonedDateTime, testZonedDateTime);
 
         when(mockUserRepository.findAll()).thenReturn(List.of(user));
@@ -69,7 +68,7 @@ class UserServiceTest {
 
     @Test
     void testGetUserById() {
-        var user = new User(1L, "john", "password", "john@example.com", "John", "Doe", ZonedDateTime.now(), null);
+        var user = new User(1L, "john", "password", "john@example.com", "John", "Doe", LocalDateTime.now(), null);
         var userDto = new UserResponseDto(1L, "john", "john@example.com", "John", "Doe", testZonedDateTime, testZonedDateTime);
 
         when(mockUserRepository.findById(1L)).thenReturn(Optional.of(user));

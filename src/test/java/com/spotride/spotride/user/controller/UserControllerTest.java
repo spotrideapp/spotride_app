@@ -9,10 +9,8 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.annotation.Rollback;
 
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
@@ -35,7 +33,7 @@ class UserControllerTest {
     @Autowired
     private UserController userController;
 
-    private ZonedDateTime testZonedDateTime;
+    private LocalDateTime testZonedDateTime;
 
     public UserControllerTest() {
         MockitoAnnotations.openMocks(this);
@@ -43,7 +41,7 @@ class UserControllerTest {
 
     @BeforeEach
     public void setUp() {
-        testZonedDateTime = ZonedDateTime.of(2024, 9, 29, 10, 0, 0, 0, ZoneId.of("UTC"));
+        testZonedDateTime = LocalDateTime.now();
     }
 
     @Test

@@ -1,7 +1,7 @@
 package com.spotride.spotride.user.service;
 
 import com.spotride.spotride.user.UserMapper;
-import com.spotride.spotride.user.dto.UserResponseDto;
+import com.spotride.spotride.user.UserMapperImpl;
 import com.spotride.spotride.user.dto.request.UserCreateRequestDto;
 import com.spotride.spotride.user.dto.request.UserUpdateRequestDto;
 import com.spotride.spotride.user.model.User;
@@ -9,9 +9,7 @@ import com.spotride.spotride.user.repository.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
@@ -22,7 +20,6 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -31,7 +28,7 @@ import static org.mockito.Mockito.when;
 /**
  * Tests for {@link UserService}.
  */
-@ContextConfiguration(classes = UserService.class)
+@ContextConfiguration(classes = {UserService.class, UserMapperImpl.class})
 @ExtendWith(SpringExtension.class)
 class UserServiceTest {
 
@@ -40,8 +37,8 @@ class UserServiceTest {
     @MockBean
     private UserRepository mockUserRepository;
 
-    @MockBean
-    private UserMapper mockUserMapper;
+    @Autowired
+    private UserMapper userMapper;
 
     @Autowired
     private UserService userService;
@@ -59,16 +56,7 @@ class UserServiceTest {
                 .modifiedAt(null)
                 .build();
 
-        var userDto = UserResponseDto.builder()
-                .id(1L)
-                .username("john")
-                .email("john@example.com")
-                .firstName("John")
-                .lastName("Doe")
-                .build();
-
         when(mockUserRepository.findAll()).thenReturn(List.of(user));
-        when(mockUserMapper.toDto(user)).thenReturn(userDto);
 
         var result = userService.getAllUsers();
 
@@ -90,16 +78,7 @@ class UserServiceTest {
                 .modifiedAt(null)
                 .build();
 
-        var userDto = UserResponseDto.builder()
-                .id(1L)
-                .username("john")
-                .email("john@example.com")
-                .firstName("John")
-                .lastName("Doe")
-                .build();
-
         when(mockUserRepository.findById(1L)).thenReturn(Optional.of(user));
-        when(mockUserMapper.toDto(user)).thenReturn(userDto);
 
         var result = userService.getUserById(1L);
 
@@ -118,17 +97,6 @@ class UserServiceTest {
                 .lastName("Doe")
                 .build();
 
-        var user = User.builder()
-                .id(1L)
-                .username("john")
-                .password("password")
-                .email("john@example.com")
-                .firstName("John")
-                .lastName("Doe")
-                .createdAt(DATE_TIME_NOW)
-                .modifiedAt(null)
-                .build();
-
         var savedUser = User.builder()
                 .id(1L)
                 .username("john")
@@ -140,18 +108,9 @@ class UserServiceTest {
                 .modifiedAt(DATE_TIME_NOW)
                 .build();
 
-        var userResponseDto = UserResponseDto.builder()
-                .id(1L)
-                .username("john")
-                .email("john@example.com")
-                .firstName("John")
-                .lastName("Doe")
-                .build();
-
-        when(mockUserMapper.toEntity(userCreateRequestDto)).thenReturn(user);
         when(mockUserRepository.save(any(User.class))).thenReturn(savedUser);
-        when(mockUserMapper.toDto(savedUser)).thenReturn(userResponseDto);
 
+        var user = userMapper.toEntity(userCreateRequestDto);
         var createdUser = userService.createUser(userCreateRequestDto);
 
         assertNotNull(createdUser);
@@ -193,23 +152,10 @@ class UserServiceTest {
                 .modifiedAt(DATE_TIME_NOW)
                 .build();
 
-        var updatedUserDto = UserResponseDto.builder()
-                .id(1L)
-                .username("john_updated")
-                .email("john_updated@example.com")
-                .firstName("John")
-                .lastName("Doe")
-                .build();
-
         when(mockUserRepository.findById(1L)).thenReturn(Optional.of(user));
-        doAnswer(invocation -> {
-            user.setUsername(userUpdateRequestDto.getUsername());
-            user.setEmail(userUpdateRequestDto.getEmail());
-            return null;
-        }).when(mockUserMapper).updateEntityFromDto(userUpdateRequestDto, user);
         when(mockUserRepository.save(user)).thenReturn(updatedUser);
-        when(mockUserMapper.toDto(updatedUser)).thenReturn(updatedUserDto);
 
+        userMapper.updateEntityFromDto(userUpdateRequestDto, user);
         var result = userService.updateUser(1L, userUpdateRequestDto);
 
         assertNotNull(result);

@@ -19,10 +19,6 @@ public interface UserMapper {
     @Mapping(target = "modifiedAt", ignore = true)
     User toEntity(UserCreateRequestDto userCreateRequestDto);
 
-    @Mapping(target = "createdAt", ignore = true)
-    @Mapping(target = "modifiedAt", ignore = true)
-    User toEntity(UserUpdateRequestDto userUpdateRequestDto);
-
     UserResponseDto toDto(User user);
 
     @Mapping(target = "createdAt", ignore = true)

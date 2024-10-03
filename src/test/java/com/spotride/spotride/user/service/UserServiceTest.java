@@ -7,10 +7,13 @@ import com.spotride.spotride.user.dto.request.UserUpdateRequestDto;
 import com.spotride.spotride.user.model.User;
 import com.spotride.spotride.user.repository.UserRepository;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -28,7 +31,8 @@ import static org.mockito.Mockito.when;
 /**
  * Tests for {@link UserService}.
  */
-@SpringBootTest
+@ContextConfiguration(classes = UserService.class)
+@ExtendWith(SpringExtension.class)
 class UserServiceTest {
 
     private static final LocalDateTime DATE_TIME_NOW = LocalDateTime.now();

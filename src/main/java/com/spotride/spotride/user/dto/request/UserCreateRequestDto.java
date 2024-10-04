@@ -27,5 +27,7 @@ public class UserCreateRequestDto {
     private String email;
 
     private String firstName;
+
     private String lastName;
+
 }

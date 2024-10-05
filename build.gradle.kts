@@ -54,6 +54,7 @@ dependencies {
 	//spotbugs plugin dependencies
 	spotbugsPlugins("com.h3xstream.findsecbugs:findsecbugs-plugin:1.13.0")
 	spotbugsPlugins("com.mebigfatguy.sb-contrib:sb-contrib:7.6.4")
+	implementation("com.github.spotbugs:spotbugs-annotations:4.8.6")
 }
 
 tasks.withType<Test> {

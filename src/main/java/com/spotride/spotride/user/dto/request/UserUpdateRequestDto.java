@@ -31,5 +31,7 @@ public class UserUpdateRequestDto {
     private String email;
 
     private String firstName;
+
     private String lastName;
+
 }

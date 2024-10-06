@@ -14,6 +14,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 /**
@@ -41,6 +42,12 @@ public class User {
     private String firstName;
 
     private String lastName;
+
+    private LocalDate birthDate;
+
+    private String phoneNumber;
+
+    private String city;
 
     @CreatedDate
     private LocalDateTime createdAt;

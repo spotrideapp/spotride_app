@@ -14,6 +14,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -54,6 +55,9 @@ class UserServiceTest {
                 .email("john@example.com")
                 .firstName("John")
                 .lastName("Doe")
+                .phoneNumber("123456789")
+                .birthDate(LocalDate.now())
+                .city("CityName")
                 .createdAt(DATE_TIME_NOW)
                 .modifiedAt(null)
                 .build();
@@ -76,6 +80,9 @@ class UserServiceTest {
                 .email("john@example.com")
                 .firstName("John")
                 .lastName("Doe")
+                .phoneNumber("123456789")
+                .birthDate(LocalDate.now())
+                .city("CityName")
                 .createdAt(DATE_TIME_NOW)
                 .modifiedAt(null)
                 .build();
@@ -97,6 +104,9 @@ class UserServiceTest {
                 .email("john@example.com")
                 .firstName("John")
                 .lastName("Doe")
+                .phoneNumber("123456789")
+                .birthDate(LocalDate.now())
+                .city("CityName")
                 .build();
 
         var savedUser = User.builder()
@@ -106,6 +116,9 @@ class UserServiceTest {
                 .email("john@example.com")
                 .firstName("John")
                 .lastName("Doe")
+                .phoneNumber("123456789")
+                .birthDate(LocalDate.now())
+                .city("CityName")
                 .createdAt(DATE_TIME_NOW)
                 .modifiedAt(DATE_TIME_NOW)
                 .build();
@@ -130,6 +143,9 @@ class UserServiceTest {
                 .email("john_updated@example.com")
                 .firstName("John")
                 .lastName("Doe")
+                .phoneNumber("123456789")
+                .birthDate(LocalDate.now())
+                .city("CityName")
                 .build();
 
         var user = User.builder()
@@ -139,6 +155,9 @@ class UserServiceTest {
                 .email("john@example.com")
                 .firstName("John")
                 .lastName("Doe")
+                .phoneNumber("123456789")
+                .birthDate(LocalDate.now())
+                .city("CityName")
                 .createdAt(DATE_TIME_NOW)
                 .modifiedAt(null)
                 .build();
@@ -150,6 +169,9 @@ class UserServiceTest {
                 .email("john_updated@example.com")
                 .firstName("John")
                 .lastName("Doe")
+                .phoneNumber("123456789")
+                .birthDate(LocalDate.now())
+                .city("CityName")
                 .createdAt(DATE_TIME_NOW)
                 .modifiedAt(DATE_TIME_NOW)
                 .build();

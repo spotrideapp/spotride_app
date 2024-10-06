@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+
 /**
  * User response DTO model.
  */
@@ -24,4 +26,9 @@ public class UserResponseDto {
 
     private String lastName;
 
+    private String phoneNumber;
+
+    private LocalDate birthDate;
+
+    private String city;
 }

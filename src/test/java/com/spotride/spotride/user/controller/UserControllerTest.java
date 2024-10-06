@@ -8,12 +8,11 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 
@@ -46,6 +45,9 @@ class UserControllerTest {
                 .email("john@example.com")
                 .firstName("John")
                 .lastName("Doe")
+                .phoneNumber("123456789")
+                .birthDate(LocalDate.now())
+                .city("CityName")
                 .build();
 
         when(mockUserService.getAllUsers()).thenReturn(List.of(userDto));
@@ -65,6 +67,9 @@ class UserControllerTest {
                 .email("john@example.com")
                 .firstName("John")
                 .lastName("Doe")
+                .phoneNumber("123456789")
+                .birthDate(LocalDate.now())
+                .city("CityName")
                 .build();
 
         when(mockUserService.getUserById(1L)).thenReturn(userDto);
@@ -85,6 +90,9 @@ class UserControllerTest {
                 .email("john@example.com")
                 .firstName("John")
                 .lastName("Doe")
+                .phoneNumber("123456789")
+                .birthDate(LocalDate.now())
+                .city("CityName")
                 .build();
 
         var createdUserDto = UserResponseDto.builder()
@@ -93,6 +101,9 @@ class UserControllerTest {
                 .email("john@example.com")
                 .firstName("John")
                 .lastName("Doe")
+                .phoneNumber("123456789")
+                .birthDate(LocalDate.now())
+                .city("CityName")
                 .build();
 
 
@@ -115,6 +126,9 @@ class UserControllerTest {
                 .email("john_updated@example.com")
                 .firstName("John")
                 .lastName("Doe")
+                .phoneNumber("123456789")
+                .birthDate(LocalDate.now())
+                .city("CityName")
                 .build();
 
         var updatedUserDto = UserResponseDto.builder()
@@ -123,6 +137,9 @@ class UserControllerTest {
                 .email("john_updated@example.com")
                 .firstName("John")
                 .lastName("Doe")
+                .phoneNumber("123456789")
+                .birthDate(LocalDate.now())
+                .city("CityName")
                 .build();
 
         when(mockUserService.updateUser(1L, userUpdateRequestDto)).thenReturn(updatedUserDto);

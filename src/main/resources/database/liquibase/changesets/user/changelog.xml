@@ -27,6 +27,13 @@
             <column name="modified_at" type="TIMESTAMP">
                 <constraints nullable="true"/>
             </column>
+            <column name="birth_date" type="DATE"/>
+            <column name="phone_number" type="VARCHAR(15)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="city" type="VARCHAR(100)">
+                <constraints nullable="true"/>
+            </column>
         </createTable>
     </changeSet>
 
